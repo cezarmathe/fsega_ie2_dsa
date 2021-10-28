@@ -26,6 +26,13 @@ stack_t stack_new(int capacity) {
 }
 
 void stack_free(stack_t * stack) {
+    // check that the pointer to the stack is not null
+    // dereferencing a null pointer is undefined behaviour
+    if (stack == NULL) {
+        printf("Null pointer!\n");
+        exit(-1);
+    }
+
     // set the capacity to 0 (the stack will not be able to hold elements
     // anymore)
     stack->cap = 0;
@@ -35,15 +42,29 @@ void stack_free(stack_t * stack) {
     free(stack->data);
 }
 
-bool stack_empty(stack_t * stack) {
+bool stack_is_empty(stack_t * stack) {
+    // check that the pointer to the stack is not null
+    // dereferencing a null pointer is undefined behaviour
+    if (stack == NULL) {
+        printf("Null pointer!\n");
+        exit(-1);
+    }
+
     // the stack is empty if it's length is equal to 0 (aka if there are no
     // elements)
     return stack->len == 0;
 }
 
 int stack_pop(stack_t * stack) {
+    // check that the pointer to the stack is not null
+    // dereferencing a null pointer is undefined behaviour
+    if (stack == NULL) {
+        printf("Null pointer!\n");
+        exit(-1);
+    }
+
     // if the stack is empty, there are no elements we can pop
-    if (stack_empty(stack)) {
+    if (stack_is_empty(stack)) {
         printf("Stack is empty\n");
         return -1;
     }
@@ -57,6 +78,13 @@ int stack_pop(stack_t * stack) {
 }
 
 void stack_push(stack_t * stack, int value) {
+    // check that the pointer to the stack is not null
+    // dereferencing a null pointer is undefined behaviour
+    if (stack == NULL) {
+        printf("Null pointer!\n");
+        exit(-1);
+    }
+
     // if the stack is full, we can't push any more elements onto the stack
     //
     // the original implementation does not check if the stack is full. try
@@ -74,8 +102,15 @@ void stack_push(stack_t * stack, int value) {
 }
 
 void stack_print(stack_t * stack) {
+    // check that the pointer to the stack is not null
+    // dereferencing a null pointer is undefined behaviour
+    if (stack == NULL) {
+        printf("Null pointer!\n");
+        exit(-1);
+    }
+
     // iterate over each element and print it
-    for (int i = 0; i < stack->len; i++) {
+    for (int i = stack->len - 1; i >= 0; i--) {
         printf("%d ", stack->data[i]);
     }
     // print a new line (for aesthetic purposes)
@@ -89,12 +124,17 @@ int main() {
     // initialize the element
     int element = -1;
 
-    // while a non-null element is passed
-    while (element != 0) {
+    // loop indefinetly
+    while (1) {
         printf("Append a number (or 0 to stop): ");
         // read an element. no checks are made to see if this is an actual
         // number. see what happens when you try to use a letter instead
         scanf("%d", &element);
+
+        // if the element is 0, break out of the loop
+        if (element == 0) {
+            break;
+        }
 
         // push the element onto the stack
         stack_push(&stack, element);
@@ -107,7 +147,7 @@ int main() {
     printf("Done\n");
 
     // while the stack is not empty
-    while (!stack_empty(&stack)) {
+    while (!stack_is_empty(&stack)) {
         // pop a value off the stack
         int popped_value = stack_pop(&stack);
         printf("Popped a value off the stack: %d\n", popped_value);

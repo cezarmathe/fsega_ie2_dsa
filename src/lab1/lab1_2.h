@@ -53,12 +53,12 @@ stack_t stack_new(int capacity);
 void stack_free(stack_t * stack);
 
 /**
- * @brief Empty a stack
+ * @brief Check if the stack is empty.
  *
  * @param stack the stack
  * @return true if the stack is empty, false otherwise
  */
-bool stack_empty(stack_t * stack);
+bool stack_is_empty(stack_t * stack);
 
 /**
  * @brief Pop a value from the stack.
