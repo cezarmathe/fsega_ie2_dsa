@@ -78,6 +78,9 @@ void list_free(list_t * list) {
         // update the current node to be the next node
         node = next;
     }
+
+    // update the list to have no head node
+    list->head = NULL;
 }
 
 void list_insert(list_t * list, int key) {

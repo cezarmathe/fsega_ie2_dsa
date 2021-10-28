@@ -40,6 +40,8 @@ void stack_free(stack_t * stack) {
     stack->len = 0;
     // deallocate the array that holds the elements in this stack
     free(stack->data);
+    // set the array pointer to NULL to indicate that it is unusable
+    stack->data = NULL;
 }
 
 bool stack_is_empty(stack_t * stack) {
