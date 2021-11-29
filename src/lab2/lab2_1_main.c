@@ -7,28 +7,31 @@
 #include "lab2_1.h"
 
 int main() {
-
+    // create a new hashtable with the capacity to hold 32 elements
+    // this capacity is an arbitrary choice, it could be any value
     hashtable_t hashtable = hashtable_new(32);
 
-    int element = -1;
+    // initialize the element variable we use for doing operations on the
+    // hashtable
+    int key = -1;
 
     // loop indefinetly
     while (1) {
-        printf("Append a number (or -1 to stop): ");
+        printf("Insert a key (or -1 to stop): ");
         // read an element. no checks are made to see if this is an actual
         // number. see what happens when you try to use a letter instead
-        scanf("%d", &element);
+        scanf("%d", &key);
 
-        // if the element is 0, break out of the loop
-        if (element == -1) {
+        // if the element is -1, break out of the loop
+        if (key == -1) {
             break;
         }
 
-        // add the element in the hash table
-        hashtable_insert(&hashtable, element);
+        // insert the key in the hash table
+        hashtable_insert(&hashtable, key);
 
+        // and then print the contents of the hash table
         printf("Contents of the hash table:\n");
-        // and then print the contents of the queue
         hashtable_print(&hashtable);
     }
 
@@ -38,48 +41,59 @@ int main() {
         printf("Search for a key (or -1 to stop): ");
         // read an element. no checks are made to see if this is an actual
         // number. see what happens when you try to use a letter instead
-        scanf("%d", &element);
+        scanf("%d", &key);
 
         // if the element is -1, break out of the loop
-        if (element == -1) {
+        if (key == -1) {
             break;
         }
 
-        // add the element in the hash table
-        int slot = hashtable_search(&hashtable, element);
+        // search for the key in the hash table
+        int slot = hashtable_search(&hashtable, key);
+        // if the slot is a positive integer it means we've found the key
         if (slot > -1) {
-            printf("Found %d, slot %d\n", element, slot);
+            printf("Search: found %d, slot %d\n", key, slot);
         } else {
-            printf("Not found %d\n", element);
+            // otherwise, the key is missing
+            printf("Search: key %d not found\n", key);
         }
     }
+
+    printf("Done\n");
 
     while (1) {
         printf("Delete a key (or -1 to stop): ");
         // read an element. no checks are made to see if this is an actual
         // number. see what happens when you try to use a letter instead
-        scanf("%d", &element);
+        scanf("%d", &key);
 
         // if the element is -1, break out of the loop
-        if (element == -1) {
+        if (key == -1) {
             break;
         }
 
-        // add the element in the hash table
-        int slot = hashtable_delete(&hashtable, element);
+        // delete the key from the hash table
+        int slot = hashtable_delete(&hashtable, key);
 
+        // if the slot is a positive integer it means we've found and deleted
+        // the key
         if (slot > -1) {
-            printf("Deleted %d from slot %d\n", element, slot);
+            printf("Delete: deleted %d from slot %d\n", key, slot);
         } else {
-            printf("Not found %d\n", element);
+            // otherwise, the key was missing
+            printf("Delete: key %d not found\n", key);
         }
 
+        // print the contents of the hash table
         printf("Contents of the hash table:\n");
-        // and then print the contents of the queue
         hashtable_print(&hashtable);
     }
 
+    printf("Done\n");
+
+    // deallocate the hash table
     hashtable_free(&hashtable);
 
+    // return 0 to indicate success
     return 0;
 }
