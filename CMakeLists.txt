@@ -23,7 +23,7 @@ add_executable(
     "src/lab1/lab1_3_main.c" "src/lab1/lab1_3.c"
     "src/lab1/lab1_3.h")
 
-add_executable("lab2_1"
-    "src/lab2/lab2_1_main.c"
-    "src/lab2/lab2_1.c"
+add_executable(
+    "lab2_1"
+    "src/lab2/lab2_1_main.c" "src/lab2/lab2_1.c"
     "src/lab2/lab2_1.h")
