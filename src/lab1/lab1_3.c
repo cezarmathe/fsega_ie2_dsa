@@ -48,7 +48,7 @@ void queue_enqueue(queue_t * queue, int value) {
     // the proper location in the data array
     queue->tail += 1;
 
-    // if the tail index reached the maximum value it means in must be reset 
+    // if the tail index reached the maximum value it means in must be reset
     // back to 0 (valid indices range from 0 to capacity - 1)
     // this happens because we use the data array (queue_t::data) in a circular
     // fashion
@@ -79,7 +79,7 @@ int queue_dequeue(queue_t * queue) {
     // read from the proper location in the data array
     queue->head += 1;
 
-    // if the head index reached the maximum value it means in must be reset 
+    // if the head index reached the maximum value it means in must be reset
     // back to 0 (valid indices range from 0 to capacity - 1)
     // this happens because we use the data array (queue_t::data) in a circular
     // fashion
@@ -155,51 +155,4 @@ void queue_free(queue_t * queue) {
     free(queue->data);
     // set the array pointer to NULL to indicate that it is unusable
     queue->data = NULL;
-}
-
-int main() {
-    // initialize a new queue
-    queue_t queue = queue_new(20);
-
-    // initialize the element
-    int element = -1;
-
-    // loop indefinetly
-    while (1) {
-        printf("Append a number (or 0 to stop): ");
-        // read an element. no checks are made to see if this is an actual
-        // number. see what happens when you try to use a letter instead
-        scanf("%d", &element);
-
-        // if the element is 0, break out of the loop
-        if (element == 0) {
-            break;
-        }
-
-        // add the element in the queue
-        queue_enqueue(&queue, element);
-
-        printf("Contents of the queue:\n");
-        // and then print the contents of the queue
-        queue_print(&queue);
-    }
-
-    printf("Done\n");
-
-    // while the queue is not empty
-    while (!queue_is_empty(&queue)) {
-        // remove a value from the queue
-        int popped_value = queue_dequeue(&queue);
-        printf("Dequeued a value from the queue: %d\n", popped_value);
-
-        printf("Contents of the queue:\n");
-        // and then print the contents of the queue
-        queue_print(&queue);
-    }
-
-    // deallocate the queue
-    queue_free(&queue);
-
-    // return ok
-    return 0;
 }
