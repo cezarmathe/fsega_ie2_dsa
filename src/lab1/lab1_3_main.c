@@ -1,5 +1,5 @@
 /*
- * lab1_3.c
+ * lab1_3_main.c
  */
 
 #include <stdio.h>
