@@ -27,3 +27,9 @@ add_executable(
     "lab2_1"
     "src/lab2/lab2_1_main.c" "src/lab2/lab2_1.c"
     "src/lab2/lab2_1.h")
+
+add_executable(
+    "lab2_2"
+    "src/lab2/lab2_2_main.c" "src/lab2/lab2_2.c" "src/lab1/lab1_1.c"
+    "src/lab2/lab2_2.h" "src/lab1/lab1_1.h")
+target_include_directories("lab2_2" PRIVATE src/lab1/)
