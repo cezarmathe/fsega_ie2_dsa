@@ -12,9 +12,10 @@ hashtable_t hashtable_new(int cap) {
     // allocate memory for the inner array of the hashtable
     list_t * inner = malloc(cap * sizeof(list_t));
 
-    // initialize all values to -1
-    // this hashtable only supports storing only positive integers
+    // initialize all table slots
+    // this hashtable supports storing only positive integers
     for (int i = 0; i < cap; i++) {
+        // create a new list in the slot
         inner[i] = list_new();
     };
 
@@ -34,41 +35,66 @@ int hashtable_hash(hashtable_t * hashtable, int key) {
 }
 
 int hashtable_insert(hashtable_t * hashtable, int key) {
-    int hash = hashtable_hash(hashtable, key);
-    list_insert(&hashtable->inner[hash], key);
-    return hash;
+    // get the hash of the key
+    // this tells us where the key should be inserted
+    int slot = hashtable_hash(hashtable, key);
+
+    // insert the key in the list at the slot indicated by 'hash'
+    list_insert(&hashtable->inner[slot], key);
+
+    // return the slot
+    return slot;
 }
 
 int hashtable_search(hashtable_t * hashtable, int key) {
-    int hash = hashtable_hash(hashtable, key);
-    if (list_search(&hashtable->inner[hash], key) == NULL) {
+    // get the hash of the key
+    // this tells us what list should we search in
+    int slot = hashtable_hash(hashtable, key);
+
+    // search the list for the specified key
+    // if no node was found, return -1 (indicating failure)
+    if (list_search(&hashtable->inner[slot], key) == NULL) {
         return -1;
     }
-    return hash;
+
+    // return the slot where the key can be found
+    return slot;
 }
 
 int hashtable_delete(hashtable_t * hashtable, int key) {
+    // get the hash of the key
+    // this tells us what list should we search in
     int hash = hashtable_hash(hashtable, key);
+
+    // search the list for the specified key
+    // if no node was found, return -1 (indicating failure)
     list_node_t * node = list_search(&hashtable->inner[hash], key);
     if (node == NULL) {
         return -1;
     }
+
+    // delete the node in the list that contains this key
     list_delete(&hashtable->inner[hash], node);
+
+    // return the slot
     return hash;
 }
 
 void hashtable_print(hashtable_t * hashtable) {
     // iterate over each slot in the table
     for (int i = 0; i < hashtable->cap; i++) {
+        // print the slot number
         printf("   slot %d\n", i);
+        // print the list
         list_print(&hashtable->inner[i]);
     }
 }
 
 void hashtable_free(hashtable_t * hashtable) {
-    // deallocate the inner array of the table
+    // deallocate each list from the inner array
     for (int i = 0; i < hashtable->cap; i++) {
         list_free(&hashtable->inner[i]);
     }
+    // deallocate the inner array of the table
     free(hashtable->inner);
 }

@@ -44,8 +44,7 @@ int hashtable_hash(hashtable_t * hashtable, int key);
  *
  * @param hashtable
  * @param key
- * @return slot in the table where the value was inserted or -1 if the table is
- *         full
+ * @return slot in the table where the value was inserted
  */
 int hashtable_insert(hashtable_t * hashtable, int key);
 
